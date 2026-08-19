@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sushmitha 🎀✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Sacramento&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffeef8, #f8bbd0, #fad2e1);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #4a4a4a;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating background icons */
+        .floating-icon {
+            position: absolute;
+            bottom: -50px;
+            font-size: 24px;
+            animation: floatUp 7s linear infinite;
+            z-index: 1;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Music Floating Control */
+        .music-player {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 16px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.2);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #d81b60;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+        }
+
+        .music-btn {
+            background: #ff4081;
+            color: white;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* App Container & Screens */
+        .container {
+            width: 90%;
+            max-width: 440px;
+            min-height: 560px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(216, 27, 96, 0.15);
+            padding: 30px 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .screen {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 0.6s ease-in-out forwards;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #d81b60;
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .next-btn {
+            background: linear-gradient(45deg, #ff4081, #e91e63);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.35);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .next-btn:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.5);
+        }
+
+        /* Screen 1: Envelope Box */
+        .envelope-card {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 18px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            width: 100%;
+            margin: 25px 0;
+            border: 2px dashed #f48fb1;
+        }
+
+        .envelope-card h3 {
+            color: #ad1457;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+
+        /* Screen 2: Photo Grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 8px 8px 20px 8px;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+            transform: rotate(var(--rot, 0deg));
+            transition: transform 0.3s;
+        }
+
+        .polaroid:nth-child(1) { --rot: -3deg; }
+        .polaroid:nth-child(2) { --rot: 3deg; }
+        .polaroid:nth-child(3) { --rot: 2deg; }
+        .polaroid:nth-child(4) { --rot: -2deg; }
+
+        .polaroid:hover {
+            transform: scale(1.06) rotate(0deg);
+            z-index: 5;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        /* Screen 3: Flip Memory Wall */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .flip-card {
+            perspective: 1000px;
+            height: 110px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .flip-card-front {
+            background: white;
+            color: #d81b60;
+            border: 2px solid #f8bbd0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, #ff80ab, #f06292);
+            color: white;
+            transform: rotateY(180deg);
+            box-shadow: 0 6px 15px rgba(240, 98, 146, 0.4);
+            line-height: 1.3;
+        }
+
+        /* Screen 4: Lock Screen */
+        .lock-container {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            width: 100%;
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .lock-icon {
+            font-size: 45px;
+            margin-bottom: 12px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .pin-input {
+            width: 180px;
+            padding: 12px;
+            font-size: 1.5rem;
+            letter-spacing: 10px;
+            text-align: center;
+            border: 2px solid #f48fb1;
+            border-radius: 15px;
+            outline: none;
+            margin: 15px 0;
+            color: #d81b60;
+            font-weight: bold;
+            transition: border-color 0.3s;
+        }
+
+        .pin-input:focus {
+            border-color: #ff4081;
+            box-shadow: 0 0 10px rgba(255, 64, 129, 0.2);
+        }
+
+        .error-msg {
+            color: #e91e63;
+            font-size: 0.85rem;
+            min-height: 20px;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        .shake {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        /* Screen 5: Letter Note */
+        .letter-card {
+            background: #fffdf9;
+            padding: 24px 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border-left: 4px solid #ff4081;
+            text-align: left;
+            line-height: 1.7;
+            font-size: 0.92rem;
+            color: #555;
+            max-height: 340px;
+            overflow-y: auto;
+        }
+
+        .letter-sign {
+            margin-top: 15px;
+            text-align: right;
+            font-weight: 700;
+            color: #d81b60;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Audio Track -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Music Status Pill -->
+    <div class="music-player" id="musicToggle">
+        <span>🎵 Play Song</span>
+        <button class="music-btn" id="playIcon">▶</button>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- Screen 1: Intro -->
+        <div class="screen active" id="screen1">
+            <h1>Happy Birthday! 🎂✨</h1>
+            <p class="subtitle">A special surprise for you...</p>
+            <div class="envelope-card">
+                <h3>💌 Hey Sushmitha!</h3>
+                <p>Today is all about you! I made a small sweet world to celebrate your special day...</p>
+            </div>
+            <button class="next-btn" onclick="nextScreen(2)">Open Your Gift 🎁</button>
+        </div>
+
+        <!-- Screen 2: Photo Collage -->
+        <div class="screen" id="screen2">
+            <h1>To My Favourite Person 💖</h1>
+            <p class="subtitle">Sushmitha 🎀</p>
+            <div class="photo-grid">
+                <div class="polaroid"><img src="IMG-20260605-WA0013.jpg" alt="Memory"></div>
+                <div class="polaroid"><img src="IMG-20260605-WA0014.jpg" alt="Memory"></div>
+                <div class="polaroid"><img src="IMG-20260605-WA0020.jpg" alt="Memory"></div>
+                <div class="polaroid"><img src="IMG-20260605-WA0021.jpg" alt="Memory"></div>
+            </div>
+            <button class="next-btn" onclick="nextScreen(3)">Next Secret 💫</button>
+        </div>
+
+        <!-- Screen 3: Memory Wall -->
+        <div class="screen" id="screen3">
+            <h1>The Birthday Wall 🎀</h1>
+            <p class="subtitle">Tap each card to reveal my love</p>
+            <div class="memory-grid">
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Tap to Reveal 🌸</div>
+                        <div class="flip-card-back">You are my heart and my soul, Happy Birthday love ❤️</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Tap to Reveal 🎀</div>
+                        <div class="flip-card-back">Every moment with you is a blessing I cherish forever 💖</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Tap to Reveal 🎂</div>
+                        <div class="flip-card-back">I love you more than words can ever express 🎀</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">Tap to Reveal 💫</div>
+                        <div class="flip-card-back">My life is beautiful only because you are in it ✨</div>
+                    </div>
+                </div>
+            </div>
+            <button class="next-btn" onclick="nextScreen(4)">Unlock Secret Note 🔒</button>
+        </div>
+
+        <!-- Screen 4: Lock Screen (Password: 1908) -->
+        <div class="screen" id="screen4">
+            <h1>Secret Message 🔐</h1>
+            <p class="subtitle">Only for Sushmitha</p>
+            <div class="lock-container" id="lockBox">
+                <div class="lock-icon">🔒</div>
+                <p style="font-size: 0.9rem; color: #666;">Enter the 4-digit Passcode to unlock</p>
+                <input type="password" id="passInput" class="pin-input" maxlength="4" placeholder="••••" inputmode="numeric">
+                <div class="error-msg" id="errorMsg"></div>
+            </div>
+            <button class="next-btn" onclick="checkPasscode()">Unlock Note 💌</button>
+        </div>
+
+        <!-- Screen 5: Heartfelt Letter -->
+        <div class="screen" id="screen5">
+            <h1>A Special Birthday Note 🌸</h1>
+            <div class="letter-card">
+                <p>Happy Birthday  Sushmitha ❤️🎂✨</p>
+                <p style="margin-top: 8px;">Nuvvu naa life lo entha special anedi words lo cheppadam kastam. ❤️ Ninnu premistunnanu ani cheppadam kanna, naa heart lo nuvvu unna place chala special. 🫶🏻</p>
+                <p style="margin-top: 8px;">Ee roju nee birthday kabatti, nee face meeda eppudu smile undali ani korukuntunna. 🥹❤️ Nee life lo happiness, success, peace anni full ga undali. ✨</p>
+                <p style="margin-top: 8px;">Naa heart ki chala daggaraina person ki… Happy Birthday Sushmitha ❤️🎀 Always be happy, keep smiling… and once again, Happy Birthday love ❤️🥹🎂</p>
+                <div class="letter-sign">Forever Pandu ❤️</div>
+            </div>
+            <button class="next-btn" onclick="nextScreen(1)">Replay from Start 🔁</button>
+        </div>
+
+    </div>
+
+    <script>
+        // Screen Navigation
+        function nextScreen(screenNum) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen' + screenNum).classList.add('active');
+            
+            // Auto start music on first click if paused
+            if (music.paused && screenNum === 2) {
+                toggleMusic();
+            }
+        }
+
+        // Passcode Validation for Screen 4
+        function checkPasscode() {
+            const passInput = document.getElementById('passInput');
+            const errorMsg = document.getElementById('errorMsg');
+            const lockBox = document.getElementById('lockBox');
+
+            if (passInput.value === '1908') {
+                errorMsg.innerText = "";
+                passInput.value = "";
+                nextScreen(5);
+            } else {
+                errorMsg.innerText = "Incorrect PIN! Try again 💖";
+                lockBox.classList.add('shake');
+                setTimeout(() => {
+                    lockBox.classList.remove('shake');
+                }, 400);
+            }
+        }
+
+        // Support Enter Key for PIN Input
+        document.getElementById('passInput').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                checkPasscode();
+            }
+        });
+
+        // Card Flip
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+
+        // Music Control
+        const music = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const playIcon = document.getElementById('playIcon');
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                musicToggle.querySelector('span').innerText = "🎵 Playing";
+                playIcon.innerText = "⏸";
+            } else {
+                music.pause();
+                musicToggle.querySelector('span').innerText = "🎵 Play Song";
+                playIcon.innerText = "▶";
+            }
+        }
+
+        musicToggle.addEventListener('click', toggleMusic);
+
+        // Floating Background Elements
+        const icons = ['🎈', '💖', '🎂', '✨', '🎀', '🌸', '🎉'];
+        function createFloatingIcon() {
+            const el = document.createElement('div');
+            el.classList.add('floating-icon');
+            el.innerText = icons[Math.floor(Math.random() * icons.length)];
+            el.style.left = Math.random() * 95 + 'vw';
+            el.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.body.appendChild(el);
+
+            setTimeout(() => {
+                el.remove();
+            }, 7000);
+        }
+        setInterval(createFloatingIcon, 400);
+    </script>
+</body>
+</html>
