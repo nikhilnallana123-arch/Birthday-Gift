@@ -25,7 +25,6 @@
             position: relative;
         }
 
-        /* Floating background icons */
         .floating-icon {
             position: absolute;
             bottom: -50px;
@@ -41,15 +40,14 @@
             100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Music Floating Control */
         .music-player {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             padding: 8px 16px;
             border-radius: 30px;
-            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.2);
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.25);
             z-index: 100;
             display: flex;
             align-items: center;
@@ -75,7 +73,6 @@
             cursor: pointer;
         }
 
-        /* App Container & Screens */
         .container {
             width: 90%;
             max-width: 440px;
@@ -144,7 +141,6 @@
             box-shadow: 0 8px 25px rgba(233, 30, 99, 0.5);
         }
 
-        /* Screen 1: Envelope Box */
         .envelope-card {
             background: white;
             padding: 30px 20px;
@@ -161,7 +157,6 @@
             margin-bottom: 8px;
         }
 
-        /* Screen 2: Photo Grid */
         .photo-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -184,11 +179,6 @@
         .polaroid:nth-child(3) { --rot: 2deg; }
         .polaroid:nth-child(4) { --rot: -2deg; }
 
-        .polaroid:hover {
-            transform: scale(1.06) rotate(0deg);
-            z-index: 5;
-        }
-
         .polaroid img {
             width: 100%;
             height: 120px;
@@ -196,7 +186,6 @@
             border-radius: 6px;
         }
 
-        /* Screen 3: Flip Memory Wall */
         .memory-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -252,7 +241,6 @@
             line-height: 1.3;
         }
 
-        /* Screen 4: Lock Screen */
         .lock-container {
             background: white;
             padding: 30px 20px;
@@ -289,12 +277,6 @@
             margin: 15px 0;
             color: #d81b60;
             font-weight: bold;
-            transition: border-color 0.3s;
-        }
-
-        .pin-input:focus {
-            border-color: #ff4081;
-            box-shadow: 0 0 10px rgba(255, 64, 129, 0.2);
         }
 
         .error-msg {
@@ -315,7 +297,6 @@
             40%, 80% { transform: translateX(8px); }
         }
 
-        /* Screen 5: Letter Note */
         .letter-card {
             background: #fffdf9;
             padding: 24px 20px;
@@ -341,21 +322,18 @@
 </head>
 <body>
 
-    <!-- Audio Track -->
-    <audio id="bgMusic" loop preload="auto">
-        <source src="song.mp4" type="audio/mp4">
+    <!-- Audio Element Supports Both Extensions -->
+    <audio id="bgMusic" loop preload="auto" playsinline>
         <source src="song.mp3" type="audio/mpeg">
+        <source src="song.mp4" type="audio/mp4">
     </audio>
 
-    <!-- Music Status Pill -->
     <div class="music-player" id="musicToggle">
-        <span>🎵 Play Song</span>
+        <span id="musicText">🎵 Play Song</span>
         <button class="music-btn" id="playIcon">▶</button>
     </div>
 
-    <!-- Main Container -->
     <div class="container">
-
         <!-- Screen 1: Intro -->
         <div class="screen active" id="screen1">
             <h1>Happy Birthday! 🎂✨</h1>
@@ -364,10 +342,10 @@
                 <h3>💌 Hey Sushmitha!</h3>
                 <p>Today is all about you! I made a small sweet world to celebrate your special day...</p>
             </div>
-            <button class="next-btn" onclick="nextScreen(2)">Open Your Gift 🎁</button>
+            <button class="next-btn" onclick="startAppAndMusic()">Open Your Gift 🎁</button>
         </div>
 
-        <!-- Screen 2: Photo Collage (Exact Repo File Names) -->
+        <!-- Screen 2: Photo Collage -->
         <div class="screen" id="screen2">
             <h1>To My Favourite Person 💖</h1>
             <p class="subtitle">Sushmitha 🎀</p>
@@ -413,7 +391,7 @@
             <button class="next-btn" onclick="nextScreen(4)">Unlock Secret Note 🔒</button>
         </div>
 
-        <!-- Screen 4: Lock Screen (Password: 1908) -->
+        <!-- Screen 4: Lock Screen -->
         <div class="screen" id="screen4">
             <h1>Secret Message 🔐</h1>
             <p class="subtitle">Only for Sushmitha</p>
@@ -426,11 +404,11 @@
             <button class="next-btn" onclick="checkPasscode()">Unlock Note 💌</button>
         </div>
 
-        <!-- Screen 5: Heartfelt Letter -->
+        <!-- Screen 5: Letter Note -->
         <div class="screen" id="screen5">
             <h1>A Special Birthday Note 🌸</h1>
             <div class="letter-card">
-                <p>Happy Birthday  Sushmitha ❤️🎂✨</p>
+                <p>Happy Birthday Sushmitha ❤️🎂✨</p>
                 <p style="margin-top: 8px;">Nuvvu naa life lo entha special anedi words lo cheppadam kastam. ❤️ Ninnu premistunnanu ani cheppadam kanna, naa heart lo nuvvu unna place chala special. 🫶🏻</p>
                 <p style="margin-top: 8px;">Ee roju nee birthday kabatti, nee face meeda eppudu smile undali ani korukuntunna. 🥹❤️ Nee life lo happiness, success, peace anni full ga undali. ✨</p>
                 <p style="margin-top: 8px;">Naa heart ki chala daggaraina person ki… Happy Birthday Sushmitha ❤️🎀 Always be happy, keep smiling… and once again, Happy Birthday love ❤️🥹🎂</p>
@@ -438,22 +416,48 @@
             </div>
             <button class="next-btn" onclick="nextScreen(1)">Replay from Start 🔁</button>
         </div>
-
     </div>
 
     <script>
-        // Screen Navigation
-        function nextScreen(screenNum) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById('screen' + screenNum).classList.add('active');
-            
-            // Auto start music on first click if paused
-            if (music.paused && screenNum === 2) {
-                toggleMusic();
+        const music = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const musicText = document.getElementById('musicText');
+        const playIcon = document.getElementById('playIcon');
+
+        function forcePlayMusic() {
+            music.play().then(() => {
+                musicText.innerText = "🎵 Playing";
+                playIcon.innerText = "⏸";
+            }).catch(err => {
+                console.log("Waiting for user tap");
+            });
+        }
+
+        function startAppAndMusic() {
+            forcePlayMusic();
+            nextScreen(2);
+        }
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                musicText.innerText = "🎵 Playing";
+                playIcon.innerText = "⏸";
+            } else {
+                music.pause();
+                musicText.innerText = "🎵 Play Song";
+                playIcon.innerText = "▶";
             }
         }
 
-        // Passcode Validation for Screen 4
+        musicToggle.addEventListener('click', toggleMusic);
+
+        function nextScreen(screenNum) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen' + screenNum).classList.add('active');
+            if (music.paused) forcePlayMusic();
+        }
+
         function checkPasscode() {
             const passInput = document.getElementById('passInput');
             const errorMsg = document.getElementById('errorMsg');
@@ -466,44 +470,18 @@
             } else {
                 errorMsg.innerText = "Incorrect PIN! Try again 💖";
                 lockBox.classList.add('shake');
-                setTimeout(() => {
-                    lockBox.classList.remove('shake');
-                }, 400);
+                setTimeout(() => { lockBox.classList.remove('shake'); }, 400);
             }
         }
 
-        // Support Enter Key for PIN Input
         document.getElementById('passInput').addEventListener('keyup', function(event) {
-            if (event.key === 'Enter') {
-                checkPasscode();
-            }
+            if (event.key === 'Enter') checkPasscode();
         });
 
-        // Card Flip
         function flipCard(card) {
             card.classList.toggle('flipped');
         }
 
-        // Music Control
-        const music = document.getElementById('bgMusic');
-        const musicToggle = document.getElementById('musicToggle');
-        const playIcon = document.getElementById('playIcon');
-
-        function toggleMusic() {
-            if (music.paused) {
-                music.play();
-                musicToggle.querySelector('span').innerText = "🎵 Playing";
-                playIcon.innerText = "⏸";
-            } else {
-                music.pause();
-                musicToggle.querySelector('span').innerText = "🎵 Play Song";
-                playIcon.innerText = "▶";
-            }
-        }
-
-        musicToggle.addEventListener('click', toggleMusic);
-
-        // Floating Background Elements
         const icons = ['🎈', '💖', '🎂', '✨', '🎀', '🌸', '🎉'];
         function createFloatingIcon() {
             const el = document.createElement('div');
@@ -512,10 +490,7 @@
             el.style.left = Math.random() * 95 + 'vw';
             el.style.animationDuration = (Math.random() * 3 + 4) + 's';
             document.body.appendChild(el);
-
-            setTimeout(() => {
-                el.remove();
-            }, 7000);
+            setTimeout(() => { el.remove(); }, 7000);
         }
         setInterval(createFloatingIcon, 400);
     </script>
